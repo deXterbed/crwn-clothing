@@ -4,6 +4,7 @@ import {
   signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -27,7 +28,7 @@ const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 const db = getFirestore();
 
-const createUserDocumentFromAuth = async (userAuth, additionalData) => {
+const createUserDocumentFromAuth = async (userAuth, additionalData = {}) => {
   if (!userAuth) return;
   const userRef = doc(db, 'users', userAuth.uid);
   const userSnapShot = await getDoc(userRef);
@@ -48,9 +49,30 @@ const createUserDocumentFromAuth = async (userAuth, additionalData) => {
   return userRef;
 };
 
+const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  try {
+    const { user } = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return user;
+  } catch (error) {
+    if (error.code === 'auth/email-already-in-use') {
+      alert('Email already in use');
+      return;
+    } else {
+      console.log(error);
+      return;
+    }
+  }
+};
+
 export {
   auth,
   signInWithGooglePopup,
   signInWithGoogleRedirect,
+  createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth
 };
