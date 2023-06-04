@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -69,10 +70,34 @@ const createAuthUserWithEmailAndPassword = async (email, password) => {
   }
 };
 
+const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  try {
+    const { user } = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    return user;
+  } catch (error) {
+    switch (error.code) {
+      case 'auth/wrong-password':
+        alert('Invalid email');
+        break;
+      case 'auth/user-not-found':
+        alert('User not found');
+        break;
+      default:
+        console.log(error);
+    }
+  }
+};
+
 export {
   auth,
   signInWithGooglePopup,
   signInWithGoogleRedirect,
   createAuthUserWithEmailAndPassword,
+  signInAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth
 };
