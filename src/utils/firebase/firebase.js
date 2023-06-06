@@ -9,7 +9,16 @@ import {
   onAuthStateChanged,
   signOut
 } from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  getDocs,
+  query,
+  collection,
+  writeBatch
+} from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -100,6 +109,30 @@ const onAuthStateChangedListener = (callback) =>
 
 const signOutAuthUser = async () => await signOut(auth);
 
+const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+  objectsToAdd.forEach((obj) => {
+    const newDocRef = doc(collectionRef, obj.title.toLowerCase());
+    batch.set(newDocRef, obj);
+  });
+  return await batch.commit();
+};
+
+const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce((acc, doc) => {
+    const { title, items } = doc.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+};
+
 export {
   auth,
   signInWithGooglePopup,
@@ -108,5 +141,7 @@ export {
   signInAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
   onAuthStateChangedListener,
-  signOutAuthUser
+  signOutAuthUser,
+  addCollectionAndDocuments,
+  getCategoriesAndDocuments
 };
