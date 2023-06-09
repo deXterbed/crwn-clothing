@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useContext } from 'react';
 import { signOutAuthUser } from '../../utils/firebase/firebase';
 import { UserContext } from '../../contexts/user-context';
@@ -9,7 +9,7 @@ import { NavigationContainer, LogoContainer, NavLinksContainer, NavLink } from '
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 
 const Navigation = () => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
   const { isCartOpen } = useContext(CartContext);
 
   return (

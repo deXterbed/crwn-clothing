@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import ProductCard from '../../components/product-card';
 import { CategoryPreviewContainer, Preview, Title } from './styles.jsx';
 

@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
   const addProductToCart = () => addItemToCart(product);
   return (
     <ProductCardContainer>
-      <img src={imageUrl} />
+      <img src={imageUrl} alt={name} />
       <FooterContainer>
         <NameContainer>{name}</NameContainer>
         <PriceContainer>{price}</PriceContainer>
