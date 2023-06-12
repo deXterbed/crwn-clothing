@@ -2,9 +2,10 @@ import { compose, legacy_createStore as createStore, applyMiddleware  } from "re
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import logger from "redux-logger";
+// import loggerMiddleware from "../middleware/logger";
 import rootReducer from "./root-reducer";
 
-const middlewares = [logger];
+const middlewares = [process.env.NODE_ENV !== 'production' && logger].filter(Boolean);
 
 const persistConfig = {
   key: 'root',
@@ -14,10 +15,16 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
+const composeEnhancer = (
+  process.env.NODE_ENV != 'production' &&
+  window &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+) || compose;
+
 export const store = createStore(
   persistedReducer,
   undefined,
-  compose(applyMiddleware(...middlewares))
+  composeEnhancer(applyMiddleware(...middlewares))
 );
 
 export const persistor = persistStore(store)
