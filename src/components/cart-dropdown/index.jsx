@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom'
 import CartItem from '../cart-item'
 import { CartDropdownContainer, CartItems, CheckoutButton, EmptyMessage } from './styles.jsx'
 import { useSelector, useDispatch } from 'react-redux'
-import { setIsCartOpen } from '../../store/cart'
-import { selectCartItemsCount, selectCartItems } from '../../selectors/cart'
+import { setIsCartOpen } from '../../store/reducers/cart'
+import { selectCartItemsCount, selectCartItems } from '../../store/selectors/cart'
 
 const CartDropdown = () => {
   const cartItemsCount = useSelector(selectCartItemsCount)

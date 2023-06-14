@@ -1,7 +1,7 @@
 import { Arrow, CheckoutItemContainer, ImageContainer, Name, Price, Quantity, RemoveButton, Value } from './styles.jsx'
-import { addItemToCart, removeItemFromCart, clearItemFromCart } from '../../store/cart'
+import { addItemToCart, removeItemFromCart, clearItemFromCart } from '../../store/reducers/cart'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectCartItems } from '../../selectors/cart';
+import { selectCartItems } from '../../store/selectors/cart';
 
 const CheckoutItem = ({ item }) => {
   const { name, imageUrl, price, quantity } = item
