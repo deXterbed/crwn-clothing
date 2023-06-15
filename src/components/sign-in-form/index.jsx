@@ -1,7 +1,7 @@
 import {
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword
-} from '../../utils/firebase/firebase';
+} from '../../utils/firebase';
 import { useState } from 'react';
 import FormInput from '../../components/form-input';
 import Button, { BUTTON_TYPE_CLASSES } from '../../components/button';

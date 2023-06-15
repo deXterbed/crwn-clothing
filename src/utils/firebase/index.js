@@ -58,7 +58,7 @@ const createUserDocumentFromAuth = async (userAuth, additionalData = {}) => {
       console.log('error creating user', error.message);
     }
   }
-  return userRef;
+  return userSnapShot;
 };
 
 const createAuthUserWithEmailAndPassword = async (email, password) => {

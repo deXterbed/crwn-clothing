@@ -9,7 +9,7 @@ import Checkout from './routes/checkout';
 import {
   createUserDocumentFromAuth,
   onAuthStateChangedListener
-} from "./utils/firebase/firebase";
+} from "./utils/firebase";
 import { setCurrentUser } from './store/user';
 
 const App = () => {
@@ -20,7 +20,9 @@ const App = () => {
       if (user) {
         createUserDocumentFromAuth(user);
       }
-      dispatch(setCurrentUser(user));
+      dispatch(setCurrentUser(
+        user && (({accessToken, email}) => ({accessToken, email}))(user)
+      ));
     });
     return unsubscribeFromAuth
   }, [dispatch]);
