@@ -21,7 +21,7 @@ const App = () => {
         createUserDocumentFromAuth(user);
       }
       dispatch(setCurrentUser(
-        user && (({accessToken, email}) => ({accessToken, email}))(user)
+        user && (({accessToken, email, displayName}) => ({accessToken, email, displayName}))(user)
       ));
     });
     return unsubscribeFromAuth
