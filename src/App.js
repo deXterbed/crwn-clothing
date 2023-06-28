@@ -6,7 +6,7 @@ import Home from './routes/home';
 import Shop from './routes/shop';
 import Authentication from './routes/authentication';
 import Checkout from './routes/checkout';
-import { checkUserSession } from './store/reducers/user';
+import { checkUserSession } from './store/reducers/user/actions';
 
 const App = () => {
   const dispatch = useDispatch();
